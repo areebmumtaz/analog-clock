@@ -1,0 +1,145 @@
+*, *::after, *::before {
+  /* So that any padding added does 'NOT' affect the sizing (e.g: width) of the entire element */
+    box-sizing: border-box;
+  }
+
+body {
+  background: linear-gradient(to right, hsl(225, 100%, 50%), hsl(100, 100%, 41%));
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+
+  overflow: hidden;
+}
+
+
+.clock-outer-frame {
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  width: 400px;
+  height: 400px;
+
+  background: rgba(85, 20, 20, 1);
+
+  border: 10px solid black;
+  border-radius: 50px;
+}
+
+
+
+.clock {
+
+  width: 300px;
+  height: 300px;
+  background-color: rgba(255, 255, 255, .8);
+  border-radius: 50%;
+  border: 6px solid brown;
+
+  position: relative;
+}
+
+
+.clock .number {
+  --rotation: 0;
+
+  /* the 'number' divs are positioned relative to its parent container (which is the 'clock' div) */
+  position: absolute;
+
+  /* 100% Because we want that DIV containing the number to take the FULL width and the height of the parent container
+    (below, for each div with a number in it, we will be center text-aligning the number in this div and then rotating this div)
+  */
+  width: 100%;
+  height: 100%;
+
+  /* Note that the number text is 'inside of a DIV' and we are CSS selecting the DIV */
+  text-align: center;
+  
+  /* Rotating the div (each div will be rotated by a certain amount depending on which number is in that div) */
+  transform: rotate(var(--rotation));
+  font-size: 1.5rem;
+}
+
+/* rotation variable values for each div with a number in it */
+.clock .number1 { --rotation: 30deg; }
+.clock .number2 { --rotation: 60deg; }
+.clock .number3 { --rotation: 90deg; }
+.clock .number4 { --rotation: 120deg; }
+.clock .number5 { --rotation: 150deg; }
+.clock .number6 { --rotation: 180deg; }
+.clock .number7 { --rotation: 210deg; }
+.clock .number8 { --rotation: 240deg; }
+.clock .number9 { --rotation: 270deg; }
+.clock .number10 { --rotation: 300deg; }
+.clock .number11 { --rotation: 330deg; }
+
+
+
+.clock .hand {
+  --rotation: 0;
+
+  /* the 'hand' divs are positioned relative to its parent container (which is the 'clock' div) */
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+
+  border: 1px solid white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  transform-origin: bottom;
+  z-index: 10;
+  
+  /* This rotation value will change based on the javascript code */
+  transform: translateX(-50%) rotate(calc(var(--rotation) * 1deg));
+}
+
+
+
+/* circle in the middle of the clock face */
+.clock::after {
+  content: '';
+  position: absolute;
+  background-color: rgba(177, 177, 16, 1);
+  z-index: 11;
+  width: 15px;
+  height: 15px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+
+/* The parent container of these hand elements... is the CLOCK element 
+    ...so we want the
+      'second' hand -> to cover 'roughly' half of the diameter of the clock
+          which is a bit less than half of the 'height' of the clock (think of the clock radius)
+      'minute' hand -> similarly but a bit THICKER DIV (larger width) 
+                      and 'a bit' shorter than 'height' of the 'second' hand
+      'minute' hand -> similarly but a bit THICKER DIV (larger width) 
+                      and 'a bit' shorter than 'height' of the 'minute' hand
+*/
+
+.clock .hand.second {
+  width: 3px;
+  height: 45%;
+  background-color: red;
+}
+
+.clock .hand.minute {
+  width: 7px;
+  height: 40%;
+  background-color: black;
+}
+
+.clock .hand.hour {
+  width: 10px;
+  height: 35%;
+  background-color: black;
+}
